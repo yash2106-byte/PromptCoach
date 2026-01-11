@@ -1,0 +1,25 @@
+{
+  "name": "prompt-coach",
+  "version": "1.0.0",
+  "description": "A web app for mastering prompt engineering through hands-on practice. Write a prompt, send it to your favorite LLM (ChatGPT, Claude, etc.), and get instant evaluation: a quality score, actionable feedback, and an optional rewritten \"better prompt.\" Learn by doing—no theory required!  Coming soon: Full multi-LLM support and advanced analytics.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yash2106-byte/PromptCoach.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yash2106-byte/PromptCoach/issues"
+  },
+  "homepage": "https://github.com/yash2106-byte/PromptCoach#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  }
+}
