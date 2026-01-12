@@ -9,6 +9,6 @@ exports.postRespone = function(req,res) {
             "Could be more specific about the tone.",
             "Adding constraints would improve precision."
         ],
-        improvedPrompt: "this respones would be better"
+        improvedPrompt: "this is a fake respone made"
     })
 }
