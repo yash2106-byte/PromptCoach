@@ -3,30 +3,31 @@ import { usersTable } from "../Models/Database/Schema.js";
 import { eq } from "drizzle-orm";
 
 export const getDetails = async function (req, res) {
-    const { id } = req.body    // extract the actual id string
+    const { formData } = req.body    // extract the actual id string
 
-    console.log(id)
+    console.log(formData)
 
-    if (!id) {
-        return res.status(400).json({ error: "ID is required" });
+    if (!formData.Gmail||!formData.Password) {
+        return res.status(400).json({ error: "Gmail is required or password is required" });
     }
+    
 
     try {
-        const result = await db.select().from(usersTable).where(eq(usersTable.id, id));
+        const result = await db.select().from(usersTable).where(eq(usersTable.email, formData.Gmail));
+        const passwordcheck = await db.select().from(usersTable).where(eq(usersTable.password, formData.Password))
+        if (passwordcheck.length===0){
+            return res.status(400).json({
+                error: "your password is wrong"
+            })
+        }
 
         if (result.length === 0) {
             return res.status(400).json({
-                error: "your id is not there in the database"
+                error: "your gmail is not there in the database"
             })
         }
 
         const details = result[0];
-        // Map back to frontend expectation if needed, or return raw. 
-        // Frontend expects {Details: {Name, Gmail, Password}} based on Login controller structure?
-        // Login controller previously saved {Name, Gmail, Password}.
-        // The DB returns { name, email, password, salt, id }.
-        // Let's ensure compatibility.
-
         const formattedDetails = {
             Name: details.name,
             Gmail: details.email,
