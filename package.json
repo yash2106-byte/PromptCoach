@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "A web app for mastering prompt engineering through hands-on practice. Write a prompt, send it to your favorite LLM (ChatGPT, Claude, etc.), and get instant evaluation: a quality score, actionable feedback, and an optional rewritten \"better prompt.\" Learn by doing—no theory required!  Coming soon: Full multi-LLM support and advanced analytics.",
   "main": "index.js",
+  "type":"module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "dev": "node --watch index",
+    "db:push": "drizzle-kit push",
+    "db:studio": "node -r dotenv/config ./node_modules/drizzle-kit/bin.cjs studio"
   },
   "repository": {
     "type": "git",
@@ -13,13 +17,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/yash2106-byte/PromptCoach/issues"
   },
   "homepage": "https://github.com/yash2106-byte/PromptCoach#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.2.1"
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.2.1",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.16.0",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0"
   }
 }
