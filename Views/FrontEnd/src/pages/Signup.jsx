@@ -2,14 +2,20 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
-    // form data here is the address of the memory which is being used by the form to store all the data and setFormData is the key to update this data
+    // formdata here is the address of the memory which is being used by the form
+    // to store all the data and setFormData is the key to update this data
     const [formData, setFormData] = useState({
         Name: '',
         Gmail: '',
         Password: ''
     });
-    const [error, setError] = useState('');// this is used to check wheather the “Email already exists” “Password too short” 
-    const navigate = useNavigate();// this helps us to changes pages
+
+    // this is used to check wheather the “Email already exists” “Password too short”
+    const [error, setError] = useState('');
+
+    // this helps us to changes pages
+    const navigate = useNavigate();
+
     // this functions ensure that every value is mapped with its actual key name
     const handleChange = (e) => {
         setFormData({
@@ -17,15 +23,16 @@ function Signup() {
             [e.target.name]: e.target.value
         });
     };
-    // this is the place where data is sent to the backend and if it is ok then new page will render
-    const handleMockSubmit = (e) => {
+
+    // this is the place where data is sent to the backend
+    // and if it is ok then new page will render
+    const handleMockSubmit = async (e) => {
         e.preventDefault();
         console.log("Signup attempt:", formData);
-        const collect = async (formData)=>{
-            // setError(true)
-            // error(null)
-            try{
-                const respone = await fetch("http://localhost:8000/signup",{
+        setError('');
+
+        try {
+            const response = await fetch("http://localhost:8000/signup", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
@@ -34,18 +41,22 @@ function Signup() {
                     formData: formData,
                 }),
             });
-            const answer = await respone.json();
-            if (answer)
-            {
+
+            const answer = await response.json();
+
+            if (!response.ok) {
+                setError(answer.error || "Something went wrong");
+                return;
+            }
+
+            if (answer.status === "success") {
                 navigate('/login');
             }
-        }catch(error){
-            console.error("Error:" , error)
-        }finally{
-            setError(false)
-        }        
-    }
-};
+        } catch (error) {
+            console.error("Error:", error);
+            setError("Server error");
+        }
+    };
 
     return (
         <div style={{
@@ -65,11 +76,30 @@ function Signup() {
                 maxWidth: '400px',
                 textAlign: 'center'
             }}>
-                <h2 style={{ marginBottom: '20px', color: 'var(--text-primary)' }}>Create Account</h2>
+                <h2 style={{ marginBottom: '20px', color: 'var(--text-primary)' }}>
+                    Create Account
+                </h2>
 
-                <form onSubmit={handleMockSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {/* error message stays minimal and non-intrusive */}
+                {error && (
+                    <p style={{ color: 'red', marginBottom: '10px' }}>
+                        {error}
+                    </p>
+                )}
+
+                <form
+                    onSubmit={handleMockSubmit}
+                    style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}
+                >
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Full Name</label>
+                        <label style={{
+                            display: 'block',
+                            marginBottom: '5px',
+                            fontSize: '0.9rem',
+                            color: 'var(--text-secondary)'
+                        }}>
+                            Full Name
+                        </label>
                         <input
                             type="text"
                             name="Name"
@@ -89,7 +119,14 @@ function Signup() {
                     </div>
 
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Email</label>
+                        <label style={{
+                            display: 'block',
+                            marginBottom: '5px',
+                            fontSize: '0.9rem',
+                            color: 'var(--text-secondary)'
+                        }}>
+                            Email
+                        </label>
                         <input
                             type="email"
                             name="Gmail"
@@ -109,7 +146,14 @@ function Signup() {
                     </div>
 
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Password</label>
+                        <label style={{
+                            display: 'block',
+                            marginBottom: '5px',
+                            fontSize: '0.9rem',
+                            color: 'var(--text-secondary)'
+                        }}>
+                            Password
+                        </label>
                         <input
                             type="password"
                             name="Password"
@@ -145,8 +189,22 @@ function Signup() {
                     </button>
                 </form>
 
-                <p style={{ marginTop: '20px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    Already have an account? <Link to="/login" style={{ color: 'var(--text-accent)', textDecoration: 'none', fontWeight: '500' }}>Log in</Link>
+                <p style={{
+                    marginTop: '20px',
+                    fontSize: '0.9rem',
+                    color: 'var(--text-secondary)'
+                }}>
+                    Already have an account?{' '}
+                    <Link
+                        to="/login"
+                        style={{
+                            color: 'var(--text-accent)',
+                            textDecoration: 'none',
+                            fontWeight: '500'
+                        }}
+                    >
+                        Log in
+                    </Link>
                 </p>
             </div>
         </div>
