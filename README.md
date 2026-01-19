@@ -1,2 +1,116 @@
 # PromptCoach
-A web app for mastering prompt engineering through hands-on practice. Write a prompt, send it to your favorite LLM (ChatGPT, Claude, etc.), and get instant evaluation: a quality score, actionable feedback, and an optional rewritten "better prompt." Learn by doing—no theory required!  Coming soon: Full multi-LLM support and advanced analytics.
+
+**PromptCoach** is a comprehensive web application designed to help users master prompt engineering through hands-on practice. It allows you to write prompts, send them to LLMs, and receive instant evaluation, including quality scores, actionable feedback, and optimized rewrites. Learn by doing—no theory required!
+
+## 🚀 Features
+
+- **Prompt Evaluation**: Get instant feedback on your prompts with a quality score.
+- **Actionable Insights**: detailed analysis of how to improve your prompt.
+- **Better Prompt Generation**: Automatically receive a rewritten, optimized version of your prompt.
+- **User Authentication**: Secure Login and Signup functionality.
+- **Modern Tech Stack**: Built with React, Node.js, and PostgreSQL.
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework**: React.js (via Vite)
+- **Routing**: React Router DOM (v7)
+- **Styling**: CSS / Styled Components (inferred)
+- **Location**: `Views/FrontEnd`
+
+### Backend
+- **Framework**: Node.js with Express.js
+- **Database ORM**: Drizzle ORM
+- **Authentication**: Custom implementation (Controllers/Login, Signup)
+- **API Structure**: RESTful API
+- **Location**: Root directory
+
+### Database
+- **System**: PostgreSQL (v15)
+- **Management**: Docker & Drizzle Kit
+
+## 📋 Prerequisites
+
+Before you begin, ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (v16 or higher)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (for the database)
+- [Git](https://git-scm.com/)
+
+## ⚙️ Installation & Setup
+
+Follow these steps to get the project running locally.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yash2106-byte/PromptCoach.git
+cd PromptCoach
+```
+
+### 2. Backend Setup
+1.  Install dependencies:
+    ```bash
+    npm install
+    ```
+2.  Create a `.env` file in the root directory and add your database URL (and port if needed):
+    ```env
+    PORT=8000
+    DATABASE_URL="postgresql://yash:mypassword@localhost:5433/postgres"
+    ```
+    *(Note: The database credentials above match the default configuration in `docker-compose.yml`)*
+
+3.  Start the Database (using Docker):
+    ```bash
+    docker-compose up -d
+    ```
+
+4.  Push the Database Schema:
+    ```bash
+    npm run db:push
+    ```
+
+5.  Start the Backend Server:
+    ```bash
+    npm run dev
+    ```
+    The server will start on `http://localhost:8000`.
+
+### 3. Frontend Setup
+1.  Navigate to the frontend directory:
+    ```bash
+    cd Views/FrontEnd
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  Start the Frontend Development Server:
+    ```bash
+    npm run dev
+    ```
+    The application will typically be accessible at `http://localhost:5173`.
+
+## 📜 Usage
+
+1.  Open your browser and navigate to the frontend URL (e.g., `http://localhost:5173`).
+2.  **Sign Up** for a new account.
+3.  **Log In** with your credentials.
+4.  Navigate to the **Analyze** section to input your prompts and receive feedback.
+
+## 🔮 Future Roadmap
+
+We are actively working on expanding PromptCoach capabilities. Upcoming updates include:
+
+*   **🛡️ Enhanced Security**: Implementing advanced authentication mechanisms (OAuth, JWT refinements) and data protection measures.
+*   **🤖 Deep AI Integration**: Direct integration with multiple LLM providers (OpenAI, Anthropic, Google Gemini) for real-time response testing.
+*   **📊 Advanced Analytics**: Detailed dashboards to track your prompt engineering improvement over time.
+*   **Multi-LLM Support**: Compare how different models respond to the same prompt.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the ISC License.
