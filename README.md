@@ -111,6 +111,33 @@ We are actively working on expanding PromptCoach capabilities. Upcoming updates 
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## Engineering Roadmap
+The development of PromptCoach is planned in structured phases, focusing on security, AI integration, and scalability.
+
+## Phase 1: Security Hardening
+Strengthen authentication and authorization flows
+Improve password handling and validation logic
+Secure API routes with proper middleware
+Better management of environment variables and secrets
+Input validation to prevent malformed or malicious requests
+
+## Phase 2: AI Integration
+Integrate AI models to generate responses for user-submitted prompts
+AI-based evaluation of prompt quality
+Smarter prompt rewrites using model feedback
+Improve accuracy and usefulness of prompt scoring
+
+## Phase 3: Multi-Model & Comparison Support
+Test the same prompt across multiple LLMs
+Compare outputs, scores, and feedback
+Enable users to understand how prompts behave with different models
+
+## Phase 4: Analytics & UX Improvements
+Track user progress over time
+Prompt performance history
+Cleaner UI and improved user experience
+Better error handling and system feedback
+
 ## 📄 License
 
 This project is licensed under the ISC License.
