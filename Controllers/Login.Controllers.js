@@ -1,30 +1,41 @@
 import db from "../Models/Database/index.js";
 import { usersTable } from "../Models/Database/Schema.js";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
+import { createHmac } from 'crypto';
 
 export const postLogin = async function (req, res) {
-     const { Name, Gmail, Password } = req.body
-     //if (Name == ""||Gmail==""||Password=="")
-     if (!Name || !Gmail || !Password) {
-          return res.status(400).json({ error: `wrong input` })
-     }
-
+     const { Gmail, Password } = req.body;
+     
      try {
-          const existingUser = await db.select().from(usersTable).where(eq(usersTable.email, Gmail));
-          if (existingUser.length > 0) {
-               return res.status(400).json({ error: "Email has already been taken" });
+          if (!Gmail || !Password) {
+               return res.status(400).json({ error: `wrong input` });
           }
-
-          const [newUser] = await db.insert(usersTable).values({
-               name: Name,
-               email: Gmail,
-               password: Password, // NOTE: In a real app, hash this password!
-               salt: "random_salt", // Placeholder as per schema requirement
-          }).returning({ id: usersTable.id });
-
-          return res.status(200).json({ status: 'succes', uniqueId: newUser.id })
+          
+          // First, get the user by email only
+          const result = await db.select()
+               .from(usersTable)
+               .where(eq(usersTable.email, Gmail));
+          
+          if (result.length === 0) {
+               return res.status(400).json({ error: "Invalid credentials" });
+          }
+          
+          const user = result[0];
+          
+          // Hash the provided password with the stored salt
+          const hashedPassword = createHmac('sha256', user.salt)
+               .update(Password)
+               .digest('hex');
+          
+          // Compare hashed passwords
+          if (hashedPassword === user.password) {
+               return res.status(200).json({ status: "success" });
+          }
+          
+          return res.status(400).json({ error: "Invalid credentials" });
+          
      } catch (error) {
-          console.error("Database error:", error);
+          console.error("Login error:", error);
           return res.status(500).json({ error: "Internal Server Error" });
      }
 }

@@ -9,6 +9,7 @@ function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    // ← YOU WERE MISSING THIS FUNCTION!
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -27,42 +28,27 @@ function Login() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    Name: "User", // Login endpoint might expect Name based on checking controller, but usually login only needs email/pass. 
-                    // However, examining the Login Controller provided earlier:
-                    // const { Name, Gmail, Password } = req.body;
-                    // It checks: if (!Name || !Gmail || !Password) return error.
-                    // THIS IS A BACKEND FLAVOR: The login controller requires Name? 
-                    // Wait, let me check the Login Controller again.
-                    // "export const postLogin = async function (req, res) { const { Name, Gmail, Password } = req.body ... if (!Name ...)"
-                    // It seems the "postLogin" function is actually a SIGNUP function based on the code: "db.insert(usersTable)..."
-                    // User Request was: "design a simple login and signup page... dont connect it to the backend just add the frontend part"
-                    // So I will implement standard Login form (Email/Pass) and Signup form (Name/Email/Pass).
-                    // Even if backend has issues, I am focused on Frontend Design as requested.
-                    // I will NOT connect it to backend for now as per "dont connect it to the backend" instruction, 
-                    // BUT I'll leave the fetch code commented out or mocked for now so strictly following "dont connect it".
-
-                    // ACTUALLY: User said "dont connect it to the backend just add the frontend part".
-                    // So I will just console log or navigate.
                     Gmail: formData.Gmail,
                     Password: formData.Password
                 })
             });
-            // For now, just simulate success since we are just doing frontend design
-            console.log("Login submitted:", formData);
-            navigate('/');
+            
+            const ans = await response.json();
+            
+            if (!response.ok) {
+                setError(ans.error || "Something went wrong");
+                return;
+            }
+
+            if (ans.status === "success") {
+                navigate('/');
+                return;
+            }
         } catch (err) {
             setError('Failed to login. Please try again.');
             console.error(err);
         }
     };
-
-    // Pure Frontend Mock Submit
-    const handleMockSubmit = (e) => {
-        e.preventDefault();
-        console.log("Login attempt:", formData);
-        // Simulate navigation
-        navigate('/');
-    }
 
     return (
         <div style={{
@@ -82,11 +68,38 @@ function Login() {
                 maxWidth: '400px',
                 textAlign: 'center'
             }}>
-                <h2 style={{ marginBottom: '20px', color: 'var(--text-primary)' }}>Welcome Back</h2>
+                <h2 style={{ marginBottom: '20px', color: 'var(--text-primary)' }}>
+                    Welcome Back
+                </h2>
 
-                <form onSubmit={handleMockSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                {/* Display error message if exists */}
+                {error && (
+                    <div style={{
+                        backgroundColor: '#fee',
+                        color: '#c33',
+                        padding: '10px',
+                        borderRadius: '8px',
+                        marginBottom: '15px',
+                        fontSize: '0.9rem'
+                    }}>
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} style={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    gap: '15px' 
+                }}>
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Email</label>
+                        <label style={{ 
+                            display: 'block', 
+                            marginBottom: '5px', 
+                            fontSize: '0.9rem', 
+                            color: 'var(--text-secondary)' 
+                        }}>
+                            Email
+                        </label>
                         <input
                             type="email"
                             name="Gmail"
@@ -106,7 +119,14 @@ function Login() {
                     </div>
 
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Password</label>
+                        <label style={{ 
+                            display: 'block', 
+                            marginBottom: '5px', 
+                            fontSize: '0.9rem', 
+                            color: 'var(--text-secondary)' 
+                        }}>
+                            Password
+                        </label>
                         <input
                             type="password"
                             name="Password"
@@ -132,17 +152,33 @@ function Login() {
                             backgroundColor: 'var(--text-accent)',
                             color: '#fff',
                             padding: '12px',
+                            border: 'none',
                             borderRadius: 'var(--radius-pill)',
                             fontWeight: '600',
-                            fontSize: '1rem'
+                            fontSize: '1rem',
+                            cursor: 'pointer'
                         }}
                     >
                         Log In
                     </button>
                 </form>
 
-                <p style={{ marginTop: '20px', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                    Don't have an account? <Link to="/signup" style={{ color: 'var(--text-accent)', textDecoration: 'none', fontWeight: '500' }}>Sign up</Link>
+                <p style={{ 
+                    marginTop: '20px', 
+                    fontSize: '0.9rem', 
+                    color: 'var(--text-secondary)' 
+                }}>
+                    Don't have an account?{' '}
+                    <Link 
+                        to="/signup" 
+                        style={{ 
+                            color: 'var(--text-accent)', 
+                            textDecoration: 'none', 
+                            fontWeight: '500' 
+                        }}
+                    >
+                        Sign up
+                    </Link>
                 </p>
             </div>
         </div>
