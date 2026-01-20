@@ -8,6 +8,7 @@ export const getDetails = async function (req, res) {
     console.log(formData)
 
     if (!formData.Gmail||!formData.Password) {
+        console.log("data is missing")        
         return res.status(400).json({ error: "Gmail is required or password is required" });
     }
     
@@ -37,28 +38,38 @@ export const getDetails = async function (req, res) {
                 )
             )
         
-        if (result.length === 0)
-        {
+        // if (result.length === 0)
+        // {
+        //     return res.status(200).json({
+        //         status: "success"
+        //     })
+        // }
+        // else
+        // {
+        //     return res.status(400).json({
+        //         error: "Something went wrong"
+        //     })
+        // }
+        if (result.length === 0) {
+            // User doesn't exist, proceed with signup
+            await db.insert(usersTable).values({
+                name: formData.Name,
+                email: formData.Gmail,
+                password: formData.Password  // Should be hashed!
+            });
             return res.status(200).json({
                 status: "success"
             })
         }
-        else
-        {
+        else {
+            // User already exists
             return res.status(400).json({
-                error: "Something went wrong"
+                error: "Email already exists"
             })
         }
     
 
-        const details = result[0];
-        const formattedDetails = {
-            Name: details.name,
-            Gmail: details.email,
-            UserId: details.id
-        };
 
-        return res.json({ status: "success", details: formattedDetails })
     } catch (error) {
         console.error("Database error:", error);
         return res.status(500).json({ error: "Internal Server Error" });

@@ -51,6 +51,10 @@ function Signup() {
 
             if (answer.status === "success") {
                 navigate('/login');
+                return;
+            }
+            else{
+                return 
             }
         } catch (error) {
             console.error("Error:", error);
