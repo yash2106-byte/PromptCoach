@@ -1,6 +1,7 @@
 import db from "../Models/Database/index.js";
 import { usersTable } from "../Models/Database/Schema.js";
 import { eq,and } from "drizzle-orm";
+import { randomBytes,createHmac } from "node:crypto"
 
 export const getDetails = async function (req, res) {
     const { formData } = req.body    // extract the actual id string
@@ -52,10 +53,13 @@ export const getDetails = async function (req, res) {
         // }
         if (result.length === 0) {
             // User doesn't exist, proceed with signup
+            const salt = randomBytes(256).toString('hex')
+            const hashedpassword = createHmac('sha256',salt).update(formData.Password).digest('hex')
             await db.insert(usersTable).values({
                 name: formData.Name,
                 email: formData.Gmail,
-                password: formData.Password  // Should be hashed!
+                password: hashedpassword,
+                salt: salt 
             });
             return res.status(200).json({
                 status: "success"
