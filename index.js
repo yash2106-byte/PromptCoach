@@ -10,7 +10,7 @@ web.use(cors());
 web.use(express.json());
 // routes
 
-web.use('/', promptRouter);
+web.use('/signup', promptRouter);
 
 
 web.listen(port, () => console.log(`your post is working on ${port}`))
