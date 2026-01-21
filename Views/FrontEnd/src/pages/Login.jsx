@@ -22,7 +22,7 @@ function Login() {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8000/login', {
+            const response = await fetch('http://localhost:8000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -32,9 +32,9 @@ function Login() {
                     Password: formData.Password
                 })
             });
-            
+
             const ans = await response.json();
-            
+
             if (!response.ok) {
                 setError(ans.error || "Something went wrong");
                 return;
@@ -86,17 +86,17 @@ function Login() {
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} style={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    gap: '15px' 
+                <form onSubmit={handleSubmit} style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '15px'
                 }}>
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ 
-                            display: 'block', 
-                            marginBottom: '5px', 
-                            fontSize: '0.9rem', 
-                            color: 'var(--text-secondary)' 
+                        <label style={{
+                            display: 'block',
+                            marginBottom: '5px',
+                            fontSize: '0.9rem',
+                            color: 'var(--text-secondary)'
                         }}>
                             Email
                         </label>
@@ -119,11 +119,11 @@ function Login() {
                     </div>
 
                     <div style={{ textAlign: 'left' }}>
-                        <label style={{ 
-                            display: 'block', 
-                            marginBottom: '5px', 
-                            fontSize: '0.9rem', 
-                            color: 'var(--text-secondary)' 
+                        <label style={{
+                            display: 'block',
+                            marginBottom: '5px',
+                            fontSize: '0.9rem',
+                            color: 'var(--text-secondary)'
                         }}>
                             Password
                         </label>
@@ -163,18 +163,18 @@ function Login() {
                     </button>
                 </form>
 
-                <p style={{ 
-                    marginTop: '20px', 
-                    fontSize: '0.9rem', 
-                    color: 'var(--text-secondary)' 
+                <p style={{
+                    marginTop: '20px',
+                    fontSize: '0.9rem',
+                    color: 'var(--text-secondary)'
                 }}>
                     Don't have an account?{' '}
-                    <Link 
-                        to="/signup" 
-                        style={{ 
-                            color: 'var(--text-accent)', 
-                            textDecoration: 'none', 
-                            fontWeight: '500' 
+                    <Link
+                        to="/signup"
+                        style={{
+                            color: 'var(--text-accent)',
+                            textDecoration: 'none',
+                            fontWeight: '500'
                         }}
                     >
                         Sign up

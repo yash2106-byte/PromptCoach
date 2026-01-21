@@ -1,18 +1,18 @@
 import db from "../Models/Database/index.js";
 import { usersTable } from "../Models/Database/Schema.js";
-import { eq,and } from "drizzle-orm";
-import { randomBytes,createHmac } from "node:crypto"
+import { eq, and } from "drizzle-orm";
+import { randomBytes, createHmac } from "node:crypto"
 
-export const getDetails = async function (req, res) {
+export const postSignup = async function (req, res) {
     const { formData } = req.body    // extract the actual id string
 
     console.log(formData)
 
-    if (!formData.Gmail||!formData.Password) {
-        console.log("data is missing")        
+    if (!formData.Gmail || !formData.Password) {
+        console.log("data is missing")
         return res.status(400).json({ error: "Gmail is required or password is required" });
     }
-    
+
 
     try {
         // const result = await db.select().from(usersTable).where(eq(usersTable.email, formData.Gmail));
@@ -34,32 +34,19 @@ export const getDetails = async function (req, res) {
             .from(usersTable)
             .where(
                 and(
-                    eq(usersTable.email,formData.Gmail),
-                    eq(usersTable.password,formData.Password)
+                    eq(usersTable.email, formData.Gmail),
                 )
             )
-        
-        // if (result.length === 0)
-        // {
-        //     return res.status(200).json({
-        //         status: "success"
-        //     })
-        // }
-        // else
-        // {
-        //     return res.status(400).json({
-        //         error: "Something went wrong"
-        //     })
-        // }
+
         if (result.length === 0) {
             // User doesn't exist, proceed with signup
             const salt = randomBytes(256).toString('hex')
-            const hashedpassword = createHmac('sha256',salt).update(formData.Password).digest('hex')
+            const hashedpassword = createHmac('sha256', salt).update(formData.Password).digest('hex')
             await db.insert(usersTable).values({
                 name: formData.Name,
                 email: formData.Gmail,
                 password: hashedpassword,
-                salt: salt 
+                salt: salt
             });
             return res.status(200).json({
                 status: "success"
@@ -71,7 +58,7 @@ export const getDetails = async function (req, res) {
                 error: "Email already exists"
             })
         }
-    
+
 
 
     } catch (error) {

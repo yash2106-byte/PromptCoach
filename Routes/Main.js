@@ -5,8 +5,8 @@ import * as sign from "../Controllers/Signup.Controllers.js";
 import express from "express";
 
 const router = express.Router()
-router.post("/signup", sign.getDetails)
+router.post("/signup", sign.postSignup)
 router.post("/login", login.postLogin)
-router.post("/analyze", analyze.postRespone)
+router.post("/analyze", analyze.postResponse)
 
 export default router;

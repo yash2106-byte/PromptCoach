@@ -1,6 +1,6 @@
-export const postRespone = function (req, res) {
+export const postResponse = function (req, res) {
     const { promptText } = req.body;
-    console.log("Recieverd from the frontend ", promptText)
+    console.log("Received from the frontend ", promptText)
 
     res.json({
         score: 85,
@@ -9,6 +9,6 @@ export const postRespone = function (req, res) {
             "Could be more specific about the tone.",
             "Adding constraints would improve precision."
         ],
-        improvedPrompt: "this is a fake respone"
+        improvedPrompt: "this is a fake response"
     })
 }
