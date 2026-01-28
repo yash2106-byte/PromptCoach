@@ -9,6 +9,6 @@ export const postResponse = function (req, res) {
             "Could be more specific about the tone.",
             "Adding constraints would improve precision."
         ],
-        improvedPrompt: "this is a fake response"
+        improvedPrompt: "High Traffic Detected Our AI service is currently at capacity.   This project uses a limited API key, so requests are temporarily paused.          Please try again in a few seconds."
     })
 }
