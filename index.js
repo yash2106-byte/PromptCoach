@@ -6,7 +6,11 @@ const port = process.env.PORT ?? 8000; // if you are changing the port make sure
 
 //middleware
 
-web.use(cors());
+web.use(cors({
+  origin: "https://prompt-coach-five.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 web.use(express.json());
 // routes
 
