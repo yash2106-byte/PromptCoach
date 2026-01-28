@@ -32,7 +32,7 @@ function Signup() {
         setError('');
 
         try {
-            const response = await fetch("https://promptcoach-backend.onrender.com", {
+            const response = await fetch("https://promptcoach-backend.onrender.com/api/signup", {
                 method: "POST",
                 headers: {
                     "content-type": "application/json",

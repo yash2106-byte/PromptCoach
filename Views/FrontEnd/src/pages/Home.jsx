@@ -18,7 +18,7 @@ function Home() {
         setResult(null); // Clear previous result
 
         try {
-            const response = await fetch("https://promptcoach-backend.onrender.com", {
+            const response = await fetch("https://promptcoach-backend.onrender.com/api", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

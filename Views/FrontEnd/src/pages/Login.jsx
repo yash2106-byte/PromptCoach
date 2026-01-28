@@ -22,7 +22,7 @@ function Login() {
         setError('');
 
         try {
-            const response = await fetch('https://promptcoach-backend.onrender.com', {
+            const response = await fetch('https://promptcoach-backend.onrender.com/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
