@@ -18,7 +18,7 @@ function Home() {
         setResult(null); // Clear previous result
 
         try {
-            const response = await fetch("http://localhost:8000/api/analyze", {
+            const response = await fetch("https://promptcoach-backend.onrender.com", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
