@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import promptRouter from "./Routes/Main.js";
 const web = express();
-const port = process.env.port ?? 8000; // if you are changing the port make sure to change in frontend also
+const port = process.env.PORT ?? 8000; // if you are changing the port make sure to change in frontend also
 
 //middleware
 
