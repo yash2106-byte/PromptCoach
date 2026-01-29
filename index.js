@@ -9,10 +9,15 @@ const port = process.env.PORT ?? 8000; // if you are changing the port make sure
 //middleware
 
 web.use(cors({
-  origin: "https://prompt-coach-five.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+    origin: [
+        'https://prompt-coach-orpin.vercel.app',
+        'http://localhost:3000',  // for local development
+        'http://localhost:5173'   // if using Vite locally
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 web.use(express.json());
 // routes
 
