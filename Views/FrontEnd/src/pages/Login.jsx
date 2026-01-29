@@ -40,14 +40,10 @@ function Login() {
                 return;
             }
 
-            if (ans.status === "success") {
-                // Store the token in localStorage
-                localStorage.setItem('authToken', ans.token);
-                localStorage.setItem('user', JSON.stringify(ans.user));
-                
-                navigate('/');
-                return;
-            }
+            localStorage.setItem('authToken', ans.token);
+            localStorage.setItem('user', JSON.stringify(ans.user));
+            navigate('/');
+
         } catch (err) {
             setError('Failed to login. Please try again.');
             console.error(err);
