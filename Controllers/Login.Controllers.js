@@ -1,8 +1,14 @@
+import db from "../Models/Database/index.js";  // Make sure path is correct
+import { usersTable } from "../Models/Database/Schema.js";
+import { eq } from "drizzle-orm";
+import { createHmac } from 'crypto';
+import jwt from 'jsonwebtoken';
+
 export const postLogin = async function (req, res) {
      const { Gmail, Password } = req.body;
      
      try {
-          console.log('Login attempt for:', Gmail); // Debug log
+          console.log('DB object:', db); // Debug log to check if db is defined
           
           if (!Gmail || !Password) {
                return res.status(400).json({ error: `wrong input` });
