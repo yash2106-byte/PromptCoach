@@ -42,7 +42,7 @@ function Login() {
 
             localStorage.setItem('authToken', ans.token);
             localStorage.setItem('user', JSON.stringify(ans.user));
-            navigate('/');
+            navigate('/home');
 
         } catch (err) {
             setError('Failed to login. Please try again.');
