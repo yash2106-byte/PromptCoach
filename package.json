@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A web app for mastering prompt engineering through hands-on practice. Write a prompt, send it to your favorite LLM (ChatGPT, Claude, etc.), and get instant evaluation: a quality score, actionable feedback, and an optional rewritten \"better prompt.\" Learn by doing—no theory required!  Coming soon: Full multi-LLM support and advanced analytics.",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node index",
     "dev": "node --watch index",
@@ -26,6 +26,7 @@
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.16.3"
   },
   "devDependencies": {

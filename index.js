@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import promptRouter from "./Routes/Main.js";
+import dotenv from 'dotenv';
+dotenv.config();
 const web = express();
 const port = process.env.PORT ?? 8000; // if you are changing the port make sure to change in frontend also
 

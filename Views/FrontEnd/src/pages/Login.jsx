@@ -41,6 +41,10 @@ function Login() {
             }
 
             if (ans.status === "success") {
+                // Store the token in localStorage
+                localStorage.setItem('authToken', ans.token);
+                localStorage.setItem('user', JSON.stringify(ans.user));
+                
                 navigate('/');
                 return;
             }

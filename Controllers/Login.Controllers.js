@@ -1,7 +1,8 @@
 import db from "../Models/Database/index.js";
 import { usersTable } from "../Models/Database/Schema.js";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { createHmac } from 'crypto';
+import jwt from 'jsonwebtoken';
 
 export const postLogin = async function (req, res) {
      const { Gmail, Password } = req.body;
@@ -29,7 +30,22 @@ export const postLogin = async function (req, res) {
           
           // Compare hashed passwords
           if (hashedPassword === user.password) {
-               return res.status(200).json({ status: "success" });
+               // Create JWT token
+               const token = jwt.sign(
+                    { userId: user.id, email: user.email },
+                    process.env.JWT_SECRET,
+                    { expiresIn: '7d' }
+               );
+               
+               // Return token and user data
+               return res.status(200).json({ 
+                    status: "success",
+                    token: token,
+                    user: { 
+                         id: user.id, 
+                         email: user.email 
+                    }
+               });
           }
           
           return res.status(400).json({ error: "Invalid credentials" });
